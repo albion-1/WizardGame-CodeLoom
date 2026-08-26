@@ -1,732 +1,559 @@
 {
+  "SchemaVersion": 2,
   "Name": "WizardGame-CodeLoom",
-  "Folders": [
+  "Files": [
     {
-      "Name": "Player",
-      "Files": [
+      "RelativePath": "Assets/Scripts/Enemies/EnemyController.cs",
+      "LastKnownHash": "1841B692A4B28B1E3B547F6E0256145FC54C3022089C05622E50B8AAD868A185",
+      "Subfiles": [
         {
-          "Name": "PlayerMovement.cs",
-          "ClassName": "PlayerMovement",
-          "BaseClass": "MonoBehaviour",
-          "Namespace": "",
-          "TypeKind": "class",
-          "TypeModifiers": "public",
-          "TypeAttributes": "[RequireComponent(typeof(CharacterController))]",
-          "UsingStatements": [
-            "using UnityEngine;"
-          ],
-          "Subfiles": [
-            {
-              "Name": "PlayerMovement.Settings",
-              "Role": "Settings",
-              "Code": "[Header(\"Movement\")]\n[SerializeField, Min(0f)] private float moveSpeed = 6f;\n[SerializeField, Min(0f)] private float rotationSpeed = 720f;\n[SerializeField] private float gravity = -20f;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Movement settings",
-              "UsedBy": "Move() and Rotate()",
-              "Purpose": "Stores player speed, rotation speed, and gravity."
-            },
-            {
-              "Name": "PlayerMovement.State",
-              "Role": "State",
-              "Code": "private CharacterController controller;\nprivate float verticalVelocity;",
-              "AssemblySection": "Auto",
-              "Receives": "Awake() and Move()",
-              "Returns": "Controller and falling state",
-              "UsedBy": "Player movement",
-              "Purpose": "Keeps the required controller reference and vertical velocity."
-            },
-            {
-              "Name": "PlayerMovement.Lifecycle",
-              "Role": "Unity lifecycle",
-              "Code": "private void Awake()\n{\n    controller = GetComponent<CharacterController>();\n}\n\nprivate void Update()\n{\n    Vector2 input = new Vector2(\n        Input.GetAxisRaw(\"Horizontal\"),\n        Input.GetAxisRaw(\"Vertical\"));\n\n    Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;\n\n    Move(direction);\n    Rotate(direction);\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Unity lifecycle and player input",
-              "Returns": "Nothing",
-              "UsedBy": "Unity",
-              "Purpose": "Initializes the controller and coordinates movement every frame."
-            },
-            {
-              "Name": "PlayerMovement.Move",
-              "Role": "Action",
-              "Code": "private void Move(Vector3 direction)\n{\n    if (controller.isGrounded && verticalVelocity < 0f)\n        verticalVelocity = -2f;\n\n    verticalVelocity += gravity * Time.deltaTime;\n\n    Vector3 velocity = direction * moveSpeed;\n    velocity.y = verticalVelocity;\n\n    controller.Move(velocity * Time.deltaTime);\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Movement direction and gravity",
-              "Returns": "Nothing",
-              "UsedBy": "Update()",
-              "Purpose": "Moves the player while applying gravity."
-            },
-            {
-              "Name": "PlayerMovement.Rotate",
-              "Role": "Action",
-              "Code": "private void Rotate(Vector3 direction)\n{\n    if (direction.sqrMagnitude < 0.01f)\n        return;\n\n    Quaternion targetRotation = Quaternion.LookRotation(direction);\n    transform.rotation = Quaternion.RotateTowards(\n        transform.rotation,\n        targetRotation,\n        rotationSpeed * Time.deltaTime);\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Movement direction",
-              "Returns": "Nothing",
-              "UsedBy": "Update()",
-              "Purpose": "Smoothly turns the player toward the movement direction."
-            }
-          ],
-          "Variables": [
-            {
-              "Name": "moveSpeed",
-              "Type": "float",
-              "DefaultValue": "6f",
-              "DeclaredIn": "PlayerMovement.Settings",
-              "Meaning": "Player movement speed in Unity units per second.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "moveSpeed",
-              "SourceLine": 2
-            },
-            {
-              "Name": "rotationSpeed",
-              "Type": "float",
-              "DefaultValue": "720f",
-              "DeclaredIn": "PlayerMovement.Settings",
-              "Meaning": "Maximum turning speed in degrees per second.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "rotationSpeed",
-              "SourceLine": 3
-            },
-            {
-              "Name": "gravity",
-              "Type": "float",
-              "DefaultValue": "-20f",
-              "DeclaredIn": "PlayerMovement.Settings",
-              "Meaning": "Downward acceleration applied to the player.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "gravity",
-              "SourceLine": 4
-            },
-            {
-              "Name": "controller",
-              "Type": "CharacterController",
-              "DefaultValue": "",
-              "DeclaredIn": "PlayerMovement.State",
-              "Meaning": "The CharacterController that moves the player.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "controller",
-              "SourceLine": 1
-            },
-            {
-              "Name": "verticalVelocity",
-              "Type": "float",
-              "DefaultValue": "0f",
-              "DeclaredIn": "PlayerMovement.State",
-              "Meaning": "The player's current vertical velocity.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "verticalVelocity",
-              "SourceLine": 2
-            }
-          ]
+          "Name": "EnemyController.Imported1",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
         },
         {
-          "Name": "PlayerHealth.cs",
-          "ClassName": "PlayerHealth",
-          "BaseClass": "MonoBehaviour",
-          "Namespace": "",
-          "TypeKind": "class",
-          "TypeModifiers": "public",
-          "TypeAttributes": "",
-          "UsingStatements": [
-            "using UnityEngine;"
-          ],
-          "Subfiles": [
-            {
-              "Name": "PlayerHealth.State",
-              "Role": "State",
-              "Code": "[SerializeField, Min(1)] private int maximumHealth = 100;\n\npublic int CurrentHealth { get; private set; }\npublic bool IsDefeated => CurrentHealth <= 0;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector and damage",
-              "Returns": "Player health state",
-              "UsedBy": "Enemies and UI",
-              "Purpose": "Stores maximum health and exposes the player's current condition."
-            },
-            {
-              "Name": "PlayerHealth.Lifecycle",
-              "Role": "Unity lifecycle",
-              "Code": "private void Awake()\n{\n    CurrentHealth = maximumHealth;\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Unity initialization",
-              "Returns": "Nothing",
-              "UsedBy": "Unity",
-              "Purpose": "Starts the player at maximum health."
-            },
-            {
-              "Name": "PlayerHealth.Damage",
-              "Role": "Action",
-              "Code": "public void TakeDamage(int amount)\n{\n    if (IsDefeated || amount <= 0)\n        return;\n\n    CurrentHealth = Mathf.Max(0, CurrentHealth - amount);\n\n    if (IsDefeated)\n        HandleDefeat();\n}\n\nprivate void HandleDefeat()\n{\n    Debug.Log(\"The player has been defeated.\", this);\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Damage amount",
-              "Returns": "Nothing",
-              "UsedBy": "EnemyController",
-              "Purpose": "Applies damage safely and handles defeat."
-            }
-          ],
-          "Variables": [
-            {
-              "Name": "maximumHealth",
-              "Type": "int",
-              "DefaultValue": "100",
-              "DeclaredIn": "PlayerHealth.State",
-              "Meaning": "The player's maximum health.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "maximumHealth",
-              "SourceLine": 1
-            },
-            {
-              "Name": "CurrentHealth",
-              "Type": "int",
-              "DefaultValue": "maximumHealth",
-              "DeclaredIn": "PlayerHealth.State",
-              "Meaning": "The player's health right now.",
-              "IsCodeBacked": true,
-              "Access": "public",
-              "Modifiers": "{ get; private set; }",
-              "SourceName": "CurrentHealth",
-              "SourceLine": 3
-            }
-          ]
+          "Name": "EnemyController.Imported2",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
         },
         {
-          "Name": "PlayerCamera.cs",
-          "ClassName": "PlayerCamera",
-          "BaseClass": "MonoBehaviour",
-          "Namespace": "",
-          "TypeKind": "class",
-          "TypeModifiers": "public",
-          "TypeAttributes": "",
-          "UsingStatements": [
-            "using UnityEngine;"
-          ],
-          "Subfiles": [
-            {
-              "Name": "PlayerCamera.TargetSettings",
-              "Role": "Settings",
-              "Code": "[Header(\"Target\")]\n[SerializeField] private Transform target;\n[SerializeField] private Vector3 targetOffset = new Vector3(0f, 1.5f, 0f);",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Camera target settings",
-              "UsedBy": "PlayerCamera.Lifecycle",
-              "Purpose": "Chooses the object the camera follows and the point on that object it looks toward."
-            },
-            {
-              "Name": "PlayerCamera.DistanceSettings",
-              "Role": "Settings",
-              "Code": "[Header(\"Distance\")]\n[SerializeField, Min(0f)] private float cameraDistance = 5f;\n[SerializeField, Min(0f)] private float minimumDistance = 0.5f;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Desired and minimum camera distance",
-              "UsedBy": "PlayerCamera.Collision",
-              "Purpose": "Controls the normal follow distance and prevents the camera from moving too close to the player."
-            },
-            {
-              "Name": "PlayerCamera.ClippingSettings",
-              "Role": "Settings",
-              "Code": "[Header(\"Wall Clipping\")]\n[SerializeField, Min(0f)] private float collisionRadius = 0.25f;\n[SerializeField, Min(0f)] private float wallPadding = 0.1f;\n[SerializeField] private LayerMask collisionLayers = ~0;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Wall collision settings",
-              "UsedBy": "PlayerCamera.Collision",
-              "Purpose": "Controls which walls block the camera and how much clearance it keeps from them."
-            },
-            {
-              "Name": "PlayerCamera.Lifecycle",
-              "Role": "Unity lifecycle",
-              "Code": "private void LateUpdate()\n{\n    if (target == null)\n        return;\n\n    Vector3 focusPoint = target.position + targetOffset;\n    Vector3 desiredDirection = -target.forward;\n    float safeDistance = FindSafeDistance(focusPoint, desiredDirection);\n\n    transform.position = focusPoint + desiredDirection * safeDistance;\n    transform.LookAt(focusPoint);\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Unity frame update and camera settings",
-              "Returns": "Nothing",
-              "UsedBy": "Unity",
-              "Purpose": "Places the camera behind the target using a distance that avoids walls."
-            },
-            {
-              "Name": "PlayerCamera.Collision",
-              "Role": "Logic",
-              "Code": "private float FindSafeDistance(Vector3 focusPoint, Vector3 direction)\n{\n    if (!Physics.SphereCast(\n            focusPoint,\n            collisionRadius,\n            direction,\n            out RaycastHit hit,\n            cameraDistance,\n            collisionLayers,\n            QueryTriggerInteraction.Ignore))\n    {\n        return cameraDistance;\n    }\n\n    return Mathf.Clamp(\n        hit.distance - wallPadding,\n        minimumDistance,\n        cameraDistance);\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Focus point, camera direction, and clipping settings",
-              "Returns": "Safe camera distance",
-              "UsedBy": "LateUpdate()",
-              "Purpose": "Checks for walls and shortens the camera distance to keep it in front of the obstruction."
-            }
-          ],
-          "Variables": [
-            {
-              "Name": "target",
-              "Type": "Transform",
-              "DefaultValue": "null",
-              "DeclaredIn": "PlayerCamera.TargetSettings",
-              "Meaning": "The player or object followed by the camera.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "target",
-              "SourceLine": 2
-            },
-            {
-              "Name": "targetOffset",
-              "Type": "Vector3",
-              "DefaultValue": "new Vector3(0f, 1.5f, 0f)",
-              "DeclaredIn": "PlayerCamera.TargetSettings",
-              "Meaning": "Moves the camera focus point above the target origin.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "targetOffset",
-              "SourceLine": 3
-            },
-            {
-              "Name": "cameraDistance",
-              "Type": "float",
-              "DefaultValue": "5f",
-              "DeclaredIn": "PlayerCamera.DistanceSettings",
-              "Meaning": "The preferred distance between the camera and target.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "cameraDistance",
-              "SourceLine": 2
-            },
-            {
-              "Name": "minimumDistance",
-              "Type": "float",
-              "DefaultValue": "0.5f",
-              "DeclaredIn": "PlayerCamera.DistanceSettings",
-              "Meaning": "The closest the camera may move toward the target.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "minimumDistance",
-              "SourceLine": 3
-            },
-            {
-              "Name": "collisionRadius",
-              "Type": "float",
-              "DefaultValue": "0.25f",
-              "DeclaredIn": "PlayerCamera.ClippingSettings",
-              "Meaning": "The thickness of the wall check around the camera path.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "collisionRadius",
-              "SourceLine": 2
-            },
-            {
-              "Name": "wallPadding",
-              "Type": "float",
-              "DefaultValue": "0.1f",
-              "DeclaredIn": "PlayerCamera.ClippingSettings",
-              "Meaning": "Extra clearance maintained between the camera and a wall.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "wallPadding",
-              "SourceLine": 3
-            },
-            {
-              "Name": "collisionLayers",
-              "Type": "LayerMask",
-              "DefaultValue": "~0",
-              "DeclaredIn": "PlayerCamera.ClippingSettings",
-              "Meaning": "The Unity layers treated as camera-blocking walls.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "collisionLayers",
-              "SourceLine": 4
-            }
-          ]
+          "Name": "EnemyController.Settings",
+          "Role": "Settings",
+          "AssemblySection": "Auto",
+          "Receives": "Inspector/default values",
+          "Returns": "Class fields",
+          "UsedBy": "Detected automatically from code",
+          "Purpose": "Imported class-level fields and settings from the original C# file."
+        },
+        {
+          "Name": "EnemyController.Awake",
+          "Role": "Unity lifecycle",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Unity callback Awake()."
+        },
+        {
+          "Name": "EnemyController.Start",
+          "Role": "Unity lifecycle",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Unity callback Start()."
+        },
+        {
+          "Name": "EnemyController.Update",
+          "Role": "Unity lifecycle",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Unity callback Update()."
+        },
+        {
+          "Name": "EnemyController.Attack",
+          "Role": "Method",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Attack() behavior from the original C# file."
         }
-      ]
+      ],
+      "VariableMeanings": {
+        "information": "The reusable definition for this enemy.",
+        "target": "The transform the enemy chases.",
+        "agent": "Unity\u0027s navigation component.",
+        "targetHealth": "The target\u0027s damage receiver.",
+        "nextAttackTime": "The next allowed attack time."
+      }
     },
     {
-      "Name": "Enemies",
-      "Files": [
+      "RelativePath": "Assets/Scripts/Enemies/EnemyHealth.cs",
+      "LastKnownHash": "10FCE7ADE3D49D90304CB2410ACBA6A01875B6ADB49017AE49C123C692C0C82C",
+      "Subfiles": [
         {
-          "Name": "EnemyInformation.cs",
-          "ClassName": "EnemyInformation",
-          "BaseClass": "ScriptableObject",
-          "Namespace": "",
-          "TypeKind": "class",
-          "TypeModifiers": "public",
-          "TypeAttributes": "[CreateAssetMenu(fileName = \"NewEnemy\", menuName = \"Wizard Game/Enemy Information\")]",
-          "UsingStatements": [
-            "using UnityEngine;"
-          ],
-          "Subfiles": [
-            {
-              "Name": "EnemyInformation.Identity",
-              "Role": "Data",
-              "Code": "[Header(\"Identity\")]\n[SerializeField] private string enemyName = \"New Enemy\";\n[SerializeField, TextArea] private string description;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Enemy identity",
-              "UsedBy": "UI and enemy systems",
-              "Purpose": "Stores the enemy's display name and description."
-            },
-            {
-              "Name": "EnemyInformation.Combat",
-              "Role": "Data",
-              "Code": "[Header(\"Combat\")]\n[SerializeField, Min(1)] private int maximumHealth = 50;\n[SerializeField, Min(0)] private int attackDamage = 10;\n[SerializeField, Min(0f)] private float attackRange = 1.75f;\n[SerializeField, Min(0f)] private float attackCooldown = 1.25f;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Combat statistics",
-              "UsedBy": "EnemyHealth and EnemyController",
-              "Purpose": "Defines health and attack behavior for an enemy type."
-            },
-            {
-              "Name": "EnemyInformation.Movement",
-              "Role": "Data",
-              "Code": "[Header(\"Movement\")]\n[SerializeField, Min(0f)] private float movementSpeed = 3.5f;\n[SerializeField, Min(0f)] private float chaseRange = 12f;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Movement statistics",
-              "UsedBy": "EnemyController",
-              "Purpose": "Defines how quickly and how far an enemy chases."
-            },
-            {
-              "Name": "EnemyInformation.Rewards",
-              "Role": "Data",
-              "Code": "[Header(\"Rewards\")]\n[SerializeField, Min(0)] private int experienceReward = 10;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Reward amount",
-              "UsedBy": "Progression systems",
-              "Purpose": "Defines the experience granted for defeating the enemy."
-            },
-            {
-              "Name": "EnemyInformation.Properties",
-              "Role": "Interface",
-              "Code": "public string EnemyName => enemyName;\npublic string Description => description;\npublic int MaximumHealth => maximumHealth;\npublic int AttackDamage => attackDamage;\npublic float AttackRange => attackRange;\npublic float AttackCooldown => attackCooldown;\npublic float MovementSpeed => movementSpeed;\npublic float ChaseRange => chaseRange;\npublic int ExperienceReward => experienceReward;",
-              "AssemblySection": "Auto",
-              "Receives": "Stored enemy values",
-              "Returns": "Read-only enemy data",
-              "UsedBy": "Enemy systems",
-              "Purpose": "Exposes enemy settings without allowing runtime scripts to overwrite them."
-            }
-          ],
-          "Variables": [
-            {
-              "Name": "enemyName",
-              "Type": "string",
-              "DefaultValue": "\"New Enemy\"",
-              "DeclaredIn": "EnemyInformation.Identity",
-              "Meaning": "The enemy's display name.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "enemyName",
-              "SourceLine": 2
-            },
-            {
-              "Name": "description",
-              "Type": "string",
-              "DefaultValue": "\"\"",
-              "DeclaredIn": "EnemyInformation.Identity",
-              "Meaning": "A description of the enemy.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "description",
-              "SourceLine": 3
-            },
-            {
-              "Name": "maximumHealth",
-              "Type": "int",
-              "DefaultValue": "50",
-              "DeclaredIn": "EnemyInformation.Combat",
-              "Meaning": "The enemy's maximum health.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "maximumHealth",
-              "SourceLine": 2
-            },
-            {
-              "Name": "attackDamage",
-              "Type": "int",
-              "DefaultValue": "10",
-              "DeclaredIn": "EnemyInformation.Combat",
-              "Meaning": "Damage dealt by one attack.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "attackDamage",
-              "SourceLine": 3
-            },
-            {
-              "Name": "attackRange",
-              "Type": "float",
-              "DefaultValue": "1.75f",
-              "DeclaredIn": "EnemyInformation.Combat",
-              "Meaning": "Distance at which the enemy can attack.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "attackRange",
-              "SourceLine": 4
-            },
-            {
-              "Name": "attackCooldown",
-              "Type": "float",
-              "DefaultValue": "1.25f",
-              "DeclaredIn": "EnemyInformation.Combat",
-              "Meaning": "Seconds between enemy attacks.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "attackCooldown",
-              "SourceLine": 5
-            },
-            {
-              "Name": "movementSpeed",
-              "Type": "float",
-              "DefaultValue": "3.5f",
-              "DeclaredIn": "EnemyInformation.Movement",
-              "Meaning": "Enemy navigation speed.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "movementSpeed",
-              "SourceLine": 2
-            },
-            {
-              "Name": "chaseRange",
-              "Type": "float",
-              "DefaultValue": "12f",
-              "DeclaredIn": "EnemyInformation.Movement",
-              "Meaning": "Distance at which the enemy begins chasing.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "chaseRange",
-              "SourceLine": 3
-            },
-            {
-              "Name": "experienceReward",
-              "Type": "int",
-              "DefaultValue": "10",
-              "DeclaredIn": "EnemyInformation.Rewards",
-              "Meaning": "Experience granted when defeated.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "experienceReward",
-              "SourceLine": 2
-            }
-          ]
+          "Name": "EnemyHealth.Imported1",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
         },
         {
-          "Name": "EnemyHealth.cs",
-          "ClassName": "EnemyHealth",
-          "BaseClass": "MonoBehaviour",
-          "Namespace": "",
-          "TypeKind": "class",
-          "TypeModifiers": "public",
-          "TypeAttributes": "",
-          "UsingStatements": [
-            "using UnityEngine;"
-          ],
-          "Subfiles": [
-            {
-              "Name": "EnemyHealth.State",
-              "Role": "State",
-              "Code": "[SerializeField] private EnemyInformation information;\n\npublic int CurrentHealth { get; private set; }\npublic bool IsDefeated => CurrentHealth <= 0;",
-              "AssemblySection": "Auto",
-              "Receives": "Enemy information and damage",
-              "Returns": "Enemy health state",
-              "UsedBy": "Combat systems",
-              "Purpose": "Stores the enemy definition and current health."
-            },
-            {
-              "Name": "EnemyHealth.Lifecycle",
-              "Role": "Unity lifecycle",
-              "Code": "private void Awake()\n{\n    if (information == null)\n    {\n        Debug.LogError(\"Enemy information is missing.\", this);\n        enabled = false;\n        return;\n    }\n\n    CurrentHealth = information.MaximumHealth;\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Unity initialization",
-              "Returns": "Nothing",
-              "UsedBy": "Unity",
-              "Purpose": "Validates enemy data and initializes health."
-            },
-            {
-              "Name": "EnemyHealth.Damage",
-              "Role": "Action",
-              "Code": "public void TakeDamage(int amount)\n{\n    if (!enabled || IsDefeated || amount <= 0)\n        return;\n\n    CurrentHealth = Mathf.Max(0, CurrentHealth - amount);\n\n    if (IsDefeated)\n        Destroy(gameObject);\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Damage amount",
-              "Returns": "Nothing",
-              "UsedBy": "Player combat systems",
-              "Purpose": "Applies damage and removes a defeated enemy."
-            }
-          ],
-          "Variables": [
-            {
-              "Name": "information",
-              "Type": "EnemyInformation",
-              "DefaultValue": "null",
-              "DeclaredIn": "EnemyHealth.State",
-              "Meaning": "The reusable data asset for this enemy.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "information",
-              "SourceLine": 1
-            },
-            {
-              "Name": "CurrentHealth",
-              "Type": "int",
-              "DefaultValue": "information.MaximumHealth",
-              "DeclaredIn": "EnemyHealth.State",
-              "Meaning": "The enemy's health right now.",
-              "IsCodeBacked": true,
-              "Access": "public",
-              "Modifiers": "{ get; private set; }",
-              "SourceName": "CurrentHealth",
-              "SourceLine": 3
-            }
-          ]
+          "Name": "EnemyHealth.CurrentHealth",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported CurrentHealth property from the original C# file."
         },
         {
-          "Name": "EnemyController.cs",
-          "ClassName": "EnemyController",
-          "BaseClass": "MonoBehaviour",
-          "Namespace": "",
-          "TypeKind": "class",
-          "TypeModifiers": "public",
-          "TypeAttributes": "[RequireComponent(typeof(NavMeshAgent))]",
-          "UsingStatements": [
-            "using UnityEngine;",
-            "using UnityEngine.AI;"
-          ],
-          "Subfiles": [
-            {
-              "Name": "EnemyController.Settings",
-              "Role": "Settings",
-              "Code": "[SerializeField] private EnemyInformation information;\n[SerializeField] private Transform target;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity Inspector",
-              "Returns": "Enemy data and target",
-              "UsedBy": "EnemyController logic",
-              "Purpose": "Connects the controller to its enemy definition and optional target."
-            },
-            {
-              "Name": "EnemyController.State",
-              "Role": "State",
-              "Code": "private NavMeshAgent agent;\nprivate PlayerHealth targetHealth;\nprivate float nextAttackTime;",
-              "AssemblySection": "Auto",
-              "Receives": "Unity lifecycle and attacks",
-              "Returns": "Runtime AI state",
-              "UsedBy": "Chase and attack logic",
-              "Purpose": "Tracks navigation, the player's health, and attack timing."
-            },
-            {
-              "Name": "EnemyController.Setup",
-              "Role": "Unity lifecycle",
-              "Code": "private void Awake()\n{\n    agent = GetComponent<NavMeshAgent>();\n}\n\nprivate void Start()\n{\n    if (target == null)\n    {\n        GameObject player = GameObject.FindGameObjectWithTag(\"Player\");\n\n        if (player != null)\n            target = player.transform;\n    }\n\n    if (target != null)\n        targetHealth = target.GetComponent<PlayerHealth>();\n\n    if (information == null)\n    {\n        Debug.LogError(\"Enemy information is missing.\", this);\n        enabled = false;\n        return;\n    }\n\n    agent.speed = information.MovementSpeed;\n    agent.stoppingDistance = information.AttackRange;\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Unity lifecycle and scene objects",
-              "Returns": "Nothing",
-              "UsedBy": "Unity",
-              "Purpose": "Finds the player, validates enemy data, and configures navigation."
-            },
-            {
-              "Name": "EnemyController.Chase",
-              "Role": "Logic",
-              "Code": "private void Update()\n{\n    if (target == null || targetHealth == null || targetHealth.IsDefeated)\n    {\n        agent.ResetPath();\n        return;\n    }\n\n    float distance = Vector3.Distance(transform.position, target.position);\n\n    if (distance > information.ChaseRange)\n    {\n        agent.ResetPath();\n        return;\n    }\n\n    if (distance > information.AttackRange)\n    {\n        agent.SetDestination(target.position);\n        return;\n    }\n\n    agent.ResetPath();\n    Attack();\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Target position and enemy data",
-              "Returns": "Nothing",
-              "UsedBy": "Unity",
-              "Purpose": "Idles outside chase range, pursues the player, and attacks in range."
-            },
-            {
-              "Name": "EnemyController.Attack",
-              "Role": "Action",
-              "Code": "private void Attack()\n{\n    if (Time.time < nextAttackTime)\n        return;\n\n    nextAttackTime = Time.time + information.AttackCooldown;\n    targetHealth.TakeDamage(information.AttackDamage);\n}",
-              "AssemblySection": "Auto",
-              "Receives": "Attack timing and enemy data",
-              "Returns": "Player damage",
-              "UsedBy": "Update()",
-              "Purpose": "Damages the player while respecting the attack cooldown."
-            }
-          ],
-          "Variables": [
-            {
-              "Name": "information",
-              "Type": "EnemyInformation",
-              "DefaultValue": "null",
-              "DeclaredIn": "EnemyController.Settings",
-              "Meaning": "The reusable definition for this enemy.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "information",
-              "SourceLine": 1
-            },
-            {
-              "Name": "target",
-              "Type": "Transform",
-              "DefaultValue": "null",
-              "DeclaredIn": "EnemyController.Settings",
-              "Meaning": "The transform the enemy chases.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "target",
-              "SourceLine": 2
-            },
-            {
-              "Name": "agent",
-              "Type": "NavMeshAgent",
-              "DefaultValue": "null",
-              "DeclaredIn": "EnemyController.State",
-              "Meaning": "Unity's navigation component.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "agent",
-              "SourceLine": 1
-            },
-            {
-              "Name": "targetHealth",
-              "Type": "PlayerHealth",
-              "DefaultValue": "null",
-              "DeclaredIn": "EnemyController.State",
-              "Meaning": "The target's damage receiver.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "targetHealth",
-              "SourceLine": 2
-            },
-            {
-              "Name": "nextAttackTime",
-              "Type": "float",
-              "DefaultValue": "0f",
-              "DeclaredIn": "EnemyController.State",
-              "Meaning": "The next allowed attack time.",
-              "IsCodeBacked": true,
-              "Access": "private",
-              "Modifiers": "",
-              "SourceName": "nextAttackTime",
-              "SourceLine": 3
-            }
-          ]
+          "Name": "EnemyHealth.IsDefeated",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported IsDefeated property from the original C# file."
+        },
+        {
+          "Name": "EnemyHealth.Awake",
+          "Role": "Unity lifecycle",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Unity callback Awake()."
+        },
+        {
+          "Name": "EnemyHealth.TakeDamage",
+          "Role": "Method",
+          "AssemblySection": "Auto",
+          "Receives": "int amount",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported TakeDamage() behavior from the original C# file."
         }
-      ]
+      ],
+      "VariableMeanings": {
+        "information": "The reusable data asset for this enemy."
+      }
+    },
+    {
+      "RelativePath": "Assets/Scripts/Enemies/EnemyInformation.cs",
+      "LastKnownHash": "590D9882673749190488F57A646A363E588DE65E6C0A1D6CDF0C5B5F9B9E3B43",
+      "Subfiles": [
+        {
+          "Name": "EnemyInformation.Imported1",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.Imported2",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.Imported3",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.Imported4",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.Imported5",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.Imported6",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.Imported7",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.Imported8",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.Imported9",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "EnemyInformation.EnemyName",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported EnemyName property from the original C# file."
+        },
+        {
+          "Name": "EnemyInformation.Description",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported Description property from the original C# file."
+        },
+        {
+          "Name": "EnemyInformation.MaximumHealth",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported MaximumHealth property from the original C# file."
+        },
+        {
+          "Name": "EnemyInformation.AttackDamage",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported AttackDamage property from the original C# file."
+        },
+        {
+          "Name": "EnemyInformation.AttackRange",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported AttackRange property from the original C# file."
+        },
+        {
+          "Name": "EnemyInformation.AttackCooldown",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported AttackCooldown property from the original C# file."
+        },
+        {
+          "Name": "EnemyInformation.MovementSpeed",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported MovementSpeed property from the original C# file."
+        },
+        {
+          "Name": "EnemyInformation.ChaseRange",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported ChaseRange property from the original C# file."
+        },
+        {
+          "Name": "EnemyInformation.ExperienceReward",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported ExperienceReward property from the original C# file."
+        }
+      ],
+      "VariableMeanings": {
+        "enemyName": "The enemy\u0027s display name.",
+        "description": "A description of the enemy.",
+        "maximumHealth": "The enemy\u0027s maximum health.",
+        "attackDamage": "Damage dealt by one attack.",
+        "attackRange": "Distance at which the enemy can attack.",
+        "attackCooldown": "Seconds between enemy attacks.",
+        "movementSpeed": "Enemy navigation speed.",
+        "chaseRange": "Distance at which the enemy begins chasing.",
+        "experienceReward": "Experience granted when defeated."
+      }
+    },
+    {
+      "RelativePath": "Assets/Scripts/Player/PlayerCamera.cs",
+      "LastKnownHash": "7A21F8F32C377F5235D1B5383177620BBD049C588A563A02A1378A7E6BCDBAF5",
+      "Subfiles": [
+        {
+          "Name": "PlayerCamera.Imported1",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerCamera.Imported2",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerCamera.Imported3",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerCamera.Imported4",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerCamera.Imported5",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerCamera.Imported6",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerCamera.Imported7",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerCamera.LateUpdate",
+          "Role": "Unity lifecycle",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Unity callback LateUpdate()."
+        },
+        {
+          "Name": "PlayerCamera.FindSafeDistance",
+          "Role": "Method",
+          "AssemblySection": "Auto",
+          "Receives": "Vector3 focusPoint, Vector3 direction",
+          "Returns": "float",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported FindSafeDistance() behavior from the original C# file."
+        }
+      ],
+      "VariableMeanings": {
+        "target": "The player or object followed by the camera.",
+        "targetOffset": "Moves the camera focus point above the target origin.",
+        "cameraDistance": "The preferred distance between the camera and target.",
+        "minimumDistance": "The closest the camera may move toward the target.",
+        "collisionRadius": "The thickness of the wall check around the camera path.",
+        "wallPadding": "Extra clearance maintained between the camera and a wall.",
+        "collisionLayers": "The Unity layers treated as camera-blocking walls."
+      }
+    },
+    {
+      "RelativePath": "Assets/Scripts/Player/PlayerHealth.cs",
+      "LastKnownHash": "5242EF9988DED7DB4EF895EAF04A2F714BBA59C2F6D39FEC026F269F8B623FE3",
+      "Subfiles": [
+        {
+          "Name": "PlayerHealth.Imported1",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerHealth.CurrentHealth",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported CurrentHealth property from the original C# file."
+        },
+        {
+          "Name": "PlayerHealth.IsDefeated",
+          "Role": "Property",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported IsDefeated property from the original C# file."
+        },
+        {
+          "Name": "PlayerHealth.Awake",
+          "Role": "Unity lifecycle",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Unity callback Awake()."
+        },
+        {
+          "Name": "PlayerHealth.TakeDamage",
+          "Role": "Method",
+          "AssemblySection": "Auto",
+          "Receives": "int amount",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported TakeDamage() behavior from the original C# file."
+        },
+        {
+          "Name": "PlayerHealth.HandleDefeat",
+          "Role": "Method",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported HandleDefeat() behavior from the original C# file."
+        }
+      ],
+      "VariableMeanings": {
+        "maximumHealth": "The player\u0027s maximum health."
+      }
+    },
+    {
+      "RelativePath": "Assets/Scripts/Player/PlayerMovement.cs",
+      "LastKnownHash": "5671ACE1596F93FED925117267BF5A377DD2DE78D6521F36098DD1CAFCA5CBAF",
+      "Subfiles": [
+        {
+          "Name": "PlayerMovement.Imported1",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerMovement.Imported2",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerMovement.Imported3",
+          "Role": "Imported",
+          "AssemblySection": "Other",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Not specified",
+          "Purpose": "Imported C# member that Code Loom could not confidently classify."
+        },
+        {
+          "Name": "PlayerMovement.Settings",
+          "Role": "Settings",
+          "AssemblySection": "Auto",
+          "Receives": "Inspector/default values",
+          "Returns": "Class fields",
+          "UsedBy": "Detected automatically from code",
+          "Purpose": "Imported class-level fields and settings from the original C# file."
+        },
+        {
+          "Name": "PlayerMovement.Awake",
+          "Role": "Unity lifecycle",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Unity callback Awake()."
+        },
+        {
+          "Name": "PlayerMovement.Update",
+          "Role": "Unity lifecycle",
+          "AssemblySection": "Auto",
+          "Receives": "Nothing",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Unity callback Update()."
+        },
+        {
+          "Name": "PlayerMovement.Move",
+          "Role": "Action",
+          "AssemblySection": "Auto",
+          "Receives": "Vector3 direction",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Move() behavior from the original C# file."
+        },
+        {
+          "Name": "PlayerMovement.Rotate",
+          "Role": "Method",
+          "AssemblySection": "Auto",
+          "Receives": "Vector3 direction",
+          "Returns": "Nothing",
+          "UsedBy": "Detected automatically in Flow",
+          "Purpose": "Imported Rotate() behavior from the original C# file."
+        }
+      ],
+      "VariableMeanings": {
+        "moveSpeed": "Player movement speed in Unity units per second.",
+        "rotationSpeed": "Maximum turning speed in degrees per second.",
+        "gravity": "Downward acceleration applied to the player.",
+        "controller": "The CharacterController that moves the player.",
+        "verticalVelocity": "The player\u0027s current vertical velocity."
+      }
     }
   ]
 }
