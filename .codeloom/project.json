@@ -199,6 +199,156 @@
               "SourceLine": 3
             }
           ]
+        },
+        {
+          "Name": "PlayerCamera.cs",
+          "ClassName": "PlayerCamera",
+          "BaseClass": "MonoBehaviour",
+          "Namespace": "",
+          "TypeKind": "class",
+          "TypeModifiers": "public",
+          "TypeAttributes": "",
+          "UsingStatements": [
+            "using UnityEngine;"
+          ],
+          "Subfiles": [
+            {
+              "Name": "PlayerCamera.TargetSettings",
+              "Role": "Settings",
+              "Code": "[Header(\"Target\")]\n[SerializeField] private Transform target;\n[SerializeField] private Vector3 targetOffset = new Vector3(0f, 1.5f, 0f);",
+              "AssemblySection": "Auto",
+              "Receives": "Unity Inspector",
+              "Returns": "Camera target settings",
+              "UsedBy": "PlayerCamera.Lifecycle",
+              "Purpose": "Chooses the object the camera follows and the point on that object it looks toward."
+            },
+            {
+              "Name": "PlayerCamera.DistanceSettings",
+              "Role": "Settings",
+              "Code": "[Header(\"Distance\")]\n[SerializeField, Min(0f)] private float cameraDistance = 5f;\n[SerializeField, Min(0f)] private float minimumDistance = 0.5f;",
+              "AssemblySection": "Auto",
+              "Receives": "Unity Inspector",
+              "Returns": "Desired and minimum camera distance",
+              "UsedBy": "PlayerCamera.Collision",
+              "Purpose": "Controls the normal follow distance and prevents the camera from moving too close to the player."
+            },
+            {
+              "Name": "PlayerCamera.ClippingSettings",
+              "Role": "Settings",
+              "Code": "[Header(\"Wall Clipping\")]\n[SerializeField, Min(0f)] private float collisionRadius = 0.25f;\n[SerializeField, Min(0f)] private float wallPadding = 0.1f;\n[SerializeField] private LayerMask collisionLayers = ~0;",
+              "AssemblySection": "Auto",
+              "Receives": "Unity Inspector",
+              "Returns": "Wall collision settings",
+              "UsedBy": "PlayerCamera.Collision",
+              "Purpose": "Controls which walls block the camera and how much clearance it keeps from them."
+            },
+            {
+              "Name": "PlayerCamera.Lifecycle",
+              "Role": "Unity lifecycle",
+              "Code": "private void LateUpdate()\n{\n    if (target == null)\n        return;\n\n    Vector3 focusPoint = target.position + targetOffset;\n    Vector3 desiredDirection = -target.forward;\n    float safeDistance = FindSafeDistance(focusPoint, desiredDirection);\n\n    transform.position = focusPoint + desiredDirection * safeDistance;\n    transform.LookAt(focusPoint);\n}",
+              "AssemblySection": "Auto",
+              "Receives": "Unity frame update and camera settings",
+              "Returns": "Nothing",
+              "UsedBy": "Unity",
+              "Purpose": "Places the camera behind the target using a distance that avoids walls."
+            },
+            {
+              "Name": "PlayerCamera.Collision",
+              "Role": "Logic",
+              "Code": "private float FindSafeDistance(Vector3 focusPoint, Vector3 direction)\n{\n    if (!Physics.SphereCast(\n            focusPoint,\n            collisionRadius,\n            direction,\n            out RaycastHit hit,\n            cameraDistance,\n            collisionLayers,\n            QueryTriggerInteraction.Ignore))\n    {\n        return cameraDistance;\n    }\n\n    return Mathf.Clamp(\n        hit.distance - wallPadding,\n        minimumDistance,\n        cameraDistance);\n}",
+              "AssemblySection": "Auto",
+              "Receives": "Focus point, camera direction, and clipping settings",
+              "Returns": "Safe camera distance",
+              "UsedBy": "LateUpdate()",
+              "Purpose": "Checks for walls and shortens the camera distance to keep it in front of the obstruction."
+            }
+          ],
+          "Variables": [
+            {
+              "Name": "target",
+              "Type": "Transform",
+              "DefaultValue": "null",
+              "DeclaredIn": "PlayerCamera.TargetSettings",
+              "Meaning": "The player or object followed by the camera.",
+              "IsCodeBacked": true,
+              "Access": "private",
+              "Modifiers": "",
+              "SourceName": "target",
+              "SourceLine": 2
+            },
+            {
+              "Name": "targetOffset",
+              "Type": "Vector3",
+              "DefaultValue": "new Vector3(0f, 1.5f, 0f)",
+              "DeclaredIn": "PlayerCamera.TargetSettings",
+              "Meaning": "Moves the camera focus point above the target origin.",
+              "IsCodeBacked": true,
+              "Access": "private",
+              "Modifiers": "",
+              "SourceName": "targetOffset",
+              "SourceLine": 3
+            },
+            {
+              "Name": "cameraDistance",
+              "Type": "float",
+              "DefaultValue": "5f",
+              "DeclaredIn": "PlayerCamera.DistanceSettings",
+              "Meaning": "The preferred distance between the camera and target.",
+              "IsCodeBacked": true,
+              "Access": "private",
+              "Modifiers": "",
+              "SourceName": "cameraDistance",
+              "SourceLine": 2
+            },
+            {
+              "Name": "minimumDistance",
+              "Type": "float",
+              "DefaultValue": "0.5f",
+              "DeclaredIn": "PlayerCamera.DistanceSettings",
+              "Meaning": "The closest the camera may move toward the target.",
+              "IsCodeBacked": true,
+              "Access": "private",
+              "Modifiers": "",
+              "SourceName": "minimumDistance",
+              "SourceLine": 3
+            },
+            {
+              "Name": "collisionRadius",
+              "Type": "float",
+              "DefaultValue": "0.25f",
+              "DeclaredIn": "PlayerCamera.ClippingSettings",
+              "Meaning": "The thickness of the wall check around the camera path.",
+              "IsCodeBacked": true,
+              "Access": "private",
+              "Modifiers": "",
+              "SourceName": "collisionRadius",
+              "SourceLine": 2
+            },
+            {
+              "Name": "wallPadding",
+              "Type": "float",
+              "DefaultValue": "0.1f",
+              "DeclaredIn": "PlayerCamera.ClippingSettings",
+              "Meaning": "Extra clearance maintained between the camera and a wall.",
+              "IsCodeBacked": true,
+              "Access": "private",
+              "Modifiers": "",
+              "SourceName": "wallPadding",
+              "SourceLine": 3
+            },
+            {
+              "Name": "collisionLayers",
+              "Type": "LayerMask",
+              "DefaultValue": "~0",
+              "DeclaredIn": "PlayerCamera.ClippingSettings",
+              "Meaning": "The Unity layers treated as camera-blocking walls.",
+              "IsCodeBacked": true,
+              "Access": "private",
+              "Modifiers": "",
+              "SourceName": "collisionLayers",
+              "SourceLine": 4
+            }
+          ]
         }
       ]
     },
