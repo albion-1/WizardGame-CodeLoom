@@ -1,0 +1,258 @@
+{
+  "Name": "WizardGame-CodeLoom",
+  "Folders": [
+    {
+      "Name": "Player",
+      "Files": [
+        {
+          "Name": "PlayerMovement.cs",
+          "ClassName": "PlayerMovement",
+          "BaseClass": "MonoBehaviour",
+          "Namespace": "",
+          "TypeKind": "class",
+          "TypeModifiers": "public",
+          "TypeAttributes": "",
+          "UsingStatements": [
+            "using UnityEngine;"
+          ],
+          "Subfiles": [
+            {
+              "Name": "Movement.Settings",
+              "Role": "Settings",
+              "Code": "[SerializeField]\nprivate float walkSpeed = 5f;",
+              "AssemblySection": "Auto",
+              "Receives": "Unity Inspector",
+              "Returns": "walkSpeed",
+              "UsedBy": "MovePlayer()",
+              "Purpose": "Stores the movement speed in one easy-to-find place."
+            },
+            {
+              "Name": "Movement.UnityLifecycle",
+              "Role": "Unity lifecycle",
+              "Code": "private void Update()\n{\n    Vector2 input = ReadMovementInput();\n    Vector3 direction = CreateMovementDirection(input);\n\n    MovePlayer(direction);\n}",
+              "AssemblySection": "Auto",
+              "Receives": "Unity frame update",
+              "Returns": "Nothing",
+              "UsedBy": "Unity",
+              "Purpose": "Coordinates the other movement pieces once every frame."
+            },
+            {
+              "Name": "Movement.Input",
+              "Role": "Input",
+              "Code": "private Vector2 ReadMovementInput()\n{\n    float horizontal = Input.GetAxisRaw(\u0022Horizontal\u0022);\n    float vertical = Input.GetAxisRaw(\u0022Vertical\u0022);\n\n    return new Vector2(horizontal, vertical);\n}",
+              "AssemblySection": "Auto",
+              "Receives": "Keyboard/controller",
+              "Returns": "Vector2 input",
+              "UsedBy": "Update()",
+              "Purpose": "Reads movement controls and returns them as two numbers."
+            },
+            {
+              "Name": "Movement.Direction",
+              "Role": "Logic",
+              "Code": "private Vector3 CreateMovementDirection(Vector2 input)\n{\n    return new Vector3(input.x, 0f, input.y).normalized;\n}",
+              "AssemblySection": "Auto",
+              "Receives": "Vector2 input",
+              "Returns": "Vector3 direction",
+              "UsedBy": "Update()",
+              "Purpose": "Converts two-dimensional input into a direction in the 3D world."
+            },
+            {
+              "Name": "Movement.MovePlayer",
+              "Role": "Action",
+              "Code": "private void MovePlayer(Vector3 direction)\n{\n    transform.position \u002B= direction * walkSpeed * Time.deltaTime;\n}",
+              "AssemblySection": "Auto",
+              "Receives": "Vector3 direction",
+              "Returns": "Nothing",
+              "UsedBy": "Update()",
+              "Purpose": "Actually changes the player object\u0027s position."
+            }
+          ],
+          "Variables": [
+            {
+              "Name": "walkSpeed",
+              "Type": "float",
+              "DefaultValue": "10f",
+              "DeclaredIn": "Movement.Settings",
+              "Meaning": "How many Unity units the player moves per second.",
+              "IsCodeBacked": true,
+              "Access": "private",
+              "Modifiers": "",
+              "SourceName": "walkSpeed",
+              "SourceLine": 2
+            }
+          ]
+        },
+        {
+          "Name": "PlayerCamera.cs",
+          "ClassName": "PlayerCamera",
+          "BaseClass": "MonoBehaviour",
+          "Namespace": "",
+          "TypeKind": "class",
+          "TypeModifiers": "public",
+          "TypeAttributes": "",
+          "UsingStatements": [
+            "using UnityEngine;"
+          ],
+          "Subfiles": [
+            {
+              "Name": "Camera.Settings",
+              "Role": "Settings",
+              "Code": "[SerializeField]\nprivate float mouseSensitivity = 2f;\n\n[SerializeField]\nprivate float pitchLimit = 70f;",
+              "AssemblySection": "Auto",
+              "Receives": "Unity Inspector",
+              "Returns": "Camera settings",
+              "UsedBy": "Camera.Look",
+              "Purpose": "Stores camera tuning values."
+            },
+            {
+              "Name": "Camera.Look",
+              "Role": "Logic",
+              "Code": "private void LookAround()\n{\n    // Mouse look will be designed here later.\n}",
+              "AssemblySection": "Auto",
+              "Receives": "Mouse movement",
+              "Returns": "Nothing",
+              "UsedBy": "Update()",
+              "Purpose": "Placeholder for the eventual mouse-look behavior."
+            }
+          ],
+          "Variables": [
+            {
+              "Name": "mouseSensitivity",
+              "Type": "float",
+              "DefaultValue": "2f",
+              "DeclaredIn": "Camera.Settings",
+              "Meaning": "How strongly mouse movement rotates the camera.",
+              "IsCodeBacked": false,
+              "Access": "",
+              "Modifiers": "",
+              "SourceName": "",
+              "SourceLine": 0
+            },
+            {
+              "Name": "pitchLimit",
+              "Type": "float",
+              "DefaultValue": "70f",
+              "DeclaredIn": "Camera.Settings",
+              "Meaning": "Stops the camera from rotating too far vertically.",
+              "IsCodeBacked": false,
+              "Access": "",
+              "Modifiers": "",
+              "SourceName": "",
+              "SourceLine": 0
+            }
+          ]
+        },
+        {
+          "Name": "PlayerStats.cs",
+          "ClassName": "PlayerStats",
+          "BaseClass": "MonoBehaviour",
+          "Namespace": "",
+          "TypeKind": "class",
+          "TypeModifiers": "public",
+          "TypeAttributes": "",
+          "UsingStatements": [
+            "using UnityEngine;"
+          ],
+          "Subfiles": [
+            {
+              "Name": "Stats.Health",
+              "Role": "State",
+              "Code": "[SerializeField]\nprivate int maxHealth = 100;\n\nprivate int currentHealth = 100;",
+              "AssemblySection": "Auto",
+              "Receives": "Inspector/default values",
+              "Returns": "Health state",
+              "UsedBy": "Combat systems",
+              "Purpose": "Stores the player\u0027s maximum and current health."
+            }
+          ],
+          "Variables": [
+            {
+              "Name": "maxHealth",
+              "Type": "int",
+              "DefaultValue": "100",
+              "DeclaredIn": "Stats.Health",
+              "Meaning": "The player\u0027s maximum health.",
+              "IsCodeBacked": false,
+              "Access": "",
+              "Modifiers": "",
+              "SourceName": "",
+              "SourceLine": 0
+            },
+            {
+              "Name": "currentHealth",
+              "Type": "int",
+              "DefaultValue": "100",
+              "DeclaredIn": "Stats.Health",
+              "Meaning": "The player\u0027s health right now.",
+              "IsCodeBacked": false,
+              "Access": "",
+              "Modifiers": "",
+              "SourceName": "",
+              "SourceLine": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "Combat",
+      "Files": [
+        {
+          "Name": "BattleController.cs",
+          "ClassName": "BattleController",
+          "BaseClass": "MonoBehaviour",
+          "Namespace": "",
+          "TypeKind": "class",
+          "TypeModifiers": "public",
+          "TypeAttributes": "",
+          "UsingStatements": [
+            "using UnityEngine;"
+          ],
+          "Subfiles": [
+            {
+              "Name": "Battle.Start",
+              "Role": "Lifecycle",
+              "Code": "private void StartBattle()\n{\n    // Battle setup will be added later.\n}",
+              "AssemblySection": "Auto",
+              "Receives": "Battle request",
+              "Returns": "Nothing",
+              "UsedBy": "Game flow",
+              "Purpose": "Future entry point for starting a battle."
+            }
+          ],
+          "Variables": []
+        }
+      ]
+    },
+    {
+      "Name": "Spells",
+      "Files": [
+        {
+          "Name": "Spell.cs",
+          "ClassName": "Spell",
+          "BaseClass": "MonoBehaviour",
+          "Namespace": "",
+          "TypeKind": "class",
+          "TypeModifiers": "public",
+          "TypeAttributes": "",
+          "UsingStatements": [
+            "using UnityEngine;"
+          ],
+          "Subfiles": [
+            {
+              "Name": "Spell.Data",
+              "Role": "Data",
+              "Code": "// Spell data will live here later.",
+              "AssemblySection": "Auto",
+              "Receives": "Design values",
+              "Returns": "Spell data",
+              "UsedBy": "Combat systems",
+              "Purpose": "Future home for spell information."
+            }
+          ],
+          "Variables": []
+        }
+      ]
+    }
+  ]
+}
